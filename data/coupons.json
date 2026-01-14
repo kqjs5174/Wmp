@@ -1,0 +1,17 @@
+{
+  "SK3K-QEZZ-2DAK": {
+    "code": "SK3K-QEZZ-2DAK",
+    "type": "points",
+    "value": 10,
+    "maxUses": 1,
+    "usedCount": 1,
+    "usedBy": [
+      "kqjs5174"
+    ],
+    "expiresAt": null,
+    "description": "",
+    "createdAt": "2026-01-10T04:58:49.344Z",
+    "status": "exhausted",
+    "lastUsedAt": "2026-01-10T04:59:05.872Z"
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "lastUpdate": "2026-01-11T14:07:18.442Z",
+  "servers": {
+    "7f54e9702e25493999bafe7ebdc8c4d6": {
+      "id": "7f54e9702e25493999bafe7ebdc8c4d6",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "kqjs5174",
+      "mcsmUserUuid": "96da2d3248214e3c9e2d92b05217cad7",
+      "name": "1212",
+      "plan": "basic",
+      "planName": "基础版",
+      "costPoints": 100,
+      "specs": {
+        "cpu": 1,
+        "memory": "1G",
+        "storage": "10G",
+        "duration": 30
+      },
+      "status": "created",
+      "createdAt": "2026-01-11T11:45:53.062Z",
+      "endTime": 1770723952865,
+      "endTimeFormatted": "2026/2/10 19:45:52",
+      "assignedToUser": false
+    },
+    "5af0d54bbe7646aebf7292643111078d": {
+      "id": "5af0d54bbe7646aebf7292643111078d",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "kqjs5174",
+      "mcsmUserUuid": "96da2d3248214e3c9e2d92b05217cad7",
+      "name": "TTT",
+      "plan": "docker_basic",
+      "planName": "Docker基础版",
+      "costPoints": 150,
+      "specs": {
+        "cpu": 1,
+        "memory": 1024,
+        "storage": "10G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      },
+      "status": "created",
+      "createdAt": "2026-01-11T11:55:14.282Z",
+      "endTime": 1770724514084,
+      "endTimeFormatted": "2026/2/10 19:55:14",
+      "assignedToUser": false
+    },
+    "bd3edb8c39b34f7880d4d512a689e405": {
+      "id": "bd3edb8c39b34f7880d4d512a689e405",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "kqjs5174",
+      "mcsmUserUuid": "96da2d3248214e3c9e2d92b05217cad7",
+      "name": "qqqq",
+      "plan": "docker_basic",
+      "planName": "Docker基础版",
+      "costPoints": 150,
+      "specs": {
+        "cpu": 1,
+        "memory": 1024,
+        "storage": "10G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:17-latest",
+      "imageId": null,
+      "status": "created",
+      "createdAt": "2026-01-11T12:03:37.321Z",
+      "endTime": 1770725017215,
+      "endTimeFormatted": "2026/2/10 20:03:37",
+      "assignedToUser": false
+    },
+    "9230bb5a7d4142f3b90899c0e23f2fed": {
+      "id": "9230bb5a7d4142f3b90899c0e23f2fed",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "kqjs5174",
+      "mcsmUserUuid": "96da2d3248214e3c9e2d92b05217cad7",
+      "name": "rrrrr",
+      "plan": "docker_standard",
+      "planName": "Docker标准版",
+      "costPoints": 300,
+      "specs": {
+        "cpu": 2,
+        "memory": 2048,
+        "storage": "20G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:17-latest",
+      "imageId": null,
+      "status": "created",
+      "createdAt": "2026-01-11T12:10:15.643Z",
+      "endTime": 1770725415537,
+      "endTimeFormatted": "2026/2/10 20:10:15",
+      "assignedToUser": false
+    },
+    "a24f94394dbd4b36af80a14a465fe8c2": {
+      "id": "a24f94394dbd4b36af80a14a465fe8c2",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "kqjs5174",
+      "mcsmUserUuid": "96da2d3248214e3c9e2d92b05217cad7",
+      "name": "1212",
+      "plan": "docker_standard",
+      "planName": "标准版",
+      "costPoints": 25,
+      "specs": {
+        "cpu": 2,
+        "memory": 2048,
+        "storage": "20G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T12:39:53.802Z",
+      "endTime": 1770727193698,
+      "endTimeFormatted": "2026/2/10 20:39:53",
+      "assignedToUser": false
+    },
+    "670e2524216e4dcfb17db807310740d1": {
+      "id": "670e2524216e4dcfb17db807310740d1",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "11222",
+      "plan": "docker_premium",
+      "planName": "高级版",
+      "costPoints": 45,
+      "specs": {
+        "cpu": 4,
+        "memory": 4096,
+        "storage": "50G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T12:55:51.486Z",
+      "endTime": 1770728151381,
+      "endTimeFormatted": "2026/2/10 20:55:51",
+      "assignedToUser": false
+    },
+    "18c5e5312d1a4ce38b4285ac3d736763": {
+      "id": "18c5e5312d1a4ce38b4285ac3d736763",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "56565",
+      "plan": "docker_premium",
+      "planName": "高级版",
+      "costPoints": 45,
+      "specs": {
+        "cpu": 4,
+        "memory": 4096,
+        "storage": "50G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T12:56:20.824Z",
+      "endTime": 1770728180769,
+      "endTimeFormatted": "2026/2/10 20:56:20",
+      "assignedToUser": true
+    },
+    "995d57c4f00b4a63b560e810e1a970bc": {
+      "id": "995d57c4f00b4a63b560e810e1a970bc",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "333",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 31,
+      "specs": {
+        "cpu": 1,
+        "memory": 2048,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T13:21:50.465Z",
+      "endTime": 1770729710390,
+      "endTimeFormatted": "2026/2/10 21:21:50",
+      "assignedToUser": true
+    },
+    "18c2b2d21fff48d78c766774c4d86216": {
+      "id": "18c2b2d21fff48d78c766774c4d86216",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "7878",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 175,
+      "specs": {
+        "cpu": 1,
+        "memory": 16384,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T13:47:44.724Z",
+      "endTime": 1770731264669,
+      "endTimeFormatted": "2026/2/10 21:47:44",
+      "assignedToUser": true
+    },
+    "5b6814b2a3804bc8b3d2502350014989": {
+      "id": "5b6814b2a3804bc8b3d2502350014989",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "9191",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 36,
+      "specs": {
+        "cpu": 1,
+        "memory": 2048,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1,
+        "ports": [
+          "1:1/tcp",
+          "1:1/udp"
+        ]
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T13:51:49.963Z",
+      "endTime": 1770731509904,
+      "endTimeFormatted": "2026/2/10 21:51:49",
+      "assignedToUser": true
+    },
+    "bd21273828cf46569542e07e51fcce52": {
+      "id": "bd21273828cf46569542e07e51fcce52",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "3434",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 36,
+      "specs": {
+        "cpu": 1,
+        "memory": 2048,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1,
+        "ports": [
+          "25565:25565/tcp",
+          "25565:25565/udp"
+        ]
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T13:56:26.604Z",
+      "endTime": 1770731786549,
+      "endTimeFormatted": "2026/2/10 21:56:26",
+      "assignedToUser": true
+    },
+    "948752820cb0462294ae98452864673d": {
+      "id": "948752820cb0462294ae98452864673d",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "1314",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 36,
+      "specs": {
+        "cpu": 1,
+        "memory": 2048,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1,
+        "ports": [
+          "25565:25565/tcp",
+          "25565:25565/udp"
+        ]
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T13:59:20.506Z",
+      "endTime": 1770731960451,
+      "endTimeFormatted": "2026/2/10 21:59:20",
+      "assignedToUser": true
+    },
+    "25e231409db9435b82adc6da12d2e34c": {
+      "id": "25e231409db9435b82adc6da12d2e34c",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "12345",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 36,
+      "specs": {
+        "cpu": 1,
+        "memory": 2048,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1,
+        "ports": [
+          "25565:25565/tcp",
+          "25565:25565/udp"
+        ]
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T14:03:11.120Z",
+      "endTime": 1770732191058,
+      "endTimeFormatted": "2026/2/10 22:03:11",
+      "assignedToUser": true
+    },
+    "6092b70ae7974562839f389796a9451a": {
+      "id": "6092b70ae7974562839f389796a9451a",
+      "daemonId": "a3369af3ec954982a3f7032d41d7d29c",
+      "userId": "tooooo",
+      "mcsmUserUuid": "06f09f5d16674a9c94ac4cd1d7ffe1c6",
+      "name": "099",
+      "plan": "custom",
+      "planName": "自定义配置",
+      "costPoints": 36,
+      "specs": {
+        "cpu": 1,
+        "memory": 2048,
+        "storage": "10G",
+        "duration": 30,
+        "portsCount": 1,
+        "ports": [
+          "5346:5346/tcp",
+          "5346:5346/udp"
+        ]
+      },
+      "dockerImage": "azul/zulu-openjdk-debian:21-latest",
+      "imageId": "java21",
+      "status": "created",
+      "createdAt": "2026-01-11T14:07:18.442Z",
+      "endTime": 1770732438375,
+      "endTimeFormatted": "2026/2/10 22:07:18",
+      "assignedToUser": true
+    }
+  }
+}

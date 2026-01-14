@@ -1,0 +1,248 @@
+{
+  "lastSync": "2026-01-11T14:07:18.439Z",
+  "points": {
+    "kqjs5174": {
+      "username": "kqjs5174",
+      "totalAmount": 10,
+      "totalPoints": 525,
+      "orderCount": 1,
+      "orders": [
+        {
+          "order_id": "kqjs5174_20260110112743_7968",
+          "amount": 10,
+          "paid_at": "2026-01-10T03:27:58.556Z"
+        }
+      ],
+      "earnedPoints": 22,
+      "deductHistory": [
+        {
+          "points": 9,
+          "reason": "续费实例: SMZY",
+          "time": "2026-01-10T03:28:11.603Z",
+          "previousPoints": 10,
+          "afterPoints": 1
+        },
+        {
+          "points": -10,
+          "reason": "每日签到奖励 (连续1天)",
+          "time": "2026-01-10T03:36:35.843Z",
+          "previousPoints": 1,
+          "afterPoints": 11
+        },
+        {
+          "points": 5,
+          "reason": "管理员扣减积分",
+          "time": "2026-01-10T04:18:10.201Z",
+          "previousPoints": 11,
+          "afterPoints": 6
+        },
+        {
+          "points": -10,
+          "reason": "兑换码兑换 (EQ17-ZGSG-SYS8)",
+          "time": "2026-01-10T04:51:36.911Z",
+          "previousPoints": 6,
+          "afterPoints": 16,
+          "type": "coupon_redeem"
+        },
+        {
+          "points": -10,
+          "reason": "兑换码兑换 (32HK-0MWK-18GL)",
+          "time": "2026-01-10T04:53:38.461Z",
+          "previousPoints": 16,
+          "afterPoints": 26,
+          "type": "coupon_redeem"
+        },
+        {
+          "points": -10,
+          "reason": "兑换码兑换 (SK3K-QEZZ-2DAK)",
+          "time": "2026-01-10T04:59:05.871Z",
+          "previousPoints": 26,
+          "afterPoints": 36,
+          "type": "coupon_redeem"
+        },
+        {
+          "points": -2,
+          "reason": "每日签到奖励 (连续2天)",
+          "time": "2026-01-11T11:40:14.175Z",
+          "previousPoints": 36,
+          "afterPoints": 38
+        },
+        {
+          "points": -162,
+          "reason": "管理员设置积分",
+          "time": "2026-01-11T11:41:21.511Z",
+          "previousPoints": 38,
+          "afterPoints": 200,
+          "type": "admin_set"
+        },
+        {
+          "points": 100,
+          "reason": "创建服务器 (基础版) - 实例ID: 7f54e9702e25493999bafe7ebdc8c4d6",
+          "time": "2026-01-11T11:45:53.061Z",
+          "previousPoints": 200,
+          "afterPoints": 100
+        },
+        {
+          "points": 0,
+          "reason": "管理员设置积分",
+          "time": "2026-01-11T11:54:47.876Z",
+          "previousPoints": 100,
+          "afterPoints": 100,
+          "type": "admin_set"
+        },
+        {
+          "points": -100,
+          "reason": "管理员设置积分",
+          "time": "2026-01-11T11:54:58.027Z",
+          "previousPoints": 100,
+          "afterPoints": 200,
+          "type": "admin_set"
+        },
+        {
+          "points": 150,
+          "reason": "创建服务器 (Docker基础版) - 实例ID: 5af0d54bbe7646aebf7292643111078d",
+          "time": "2026-01-11T11:55:14.281Z",
+          "previousPoints": 200,
+          "afterPoints": 50
+        },
+        {
+          "points": -950,
+          "reason": "管理员设置积分",
+          "time": "2026-01-11T12:03:20.863Z",
+          "previousPoints": 50,
+          "afterPoints": 1000,
+          "type": "admin_set"
+        },
+        {
+          "points": 150,
+          "reason": "创建服务器 (Docker基础版) - 实例ID: bd3edb8c39b34f7880d4d512a689e405",
+          "time": "2026-01-11T12:03:37.320Z",
+          "previousPoints": 1000,
+          "afterPoints": 850
+        },
+        {
+          "points": 300,
+          "reason": "创建服务器 (Docker标准版) - 实例ID: 9230bb5a7d4142f3b90899c0e23f2fed",
+          "time": "2026-01-11T12:10:15.642Z",
+          "previousPoints": 850,
+          "afterPoints": 550
+        },
+        {
+          "points": 25,
+          "reason": "创建服务器 (标准版) - 实例ID: a24f94394dbd4b36af80a14a465fe8c2",
+          "time": "2026-01-11T12:39:53.801Z",
+          "previousPoints": 550,
+          "afterPoints": 525
+        }
+      ],
+      "totalDeducted": 0
+    },
+    "newuser123": {
+      "username": "newuser123",
+      "totalAmount": 0,
+      "earnedPoints": 12,
+      "totalPoints": 12,
+      "totalDeducted": 0,
+      "orderCount": 0,
+      "orders": [],
+      "deductHistory": [
+        {
+          "points": -12,
+          "reason": "每日签到奖励 (连续1天)",
+          "time": "2026-01-10T03:51:49.303Z",
+          "previousPoints": 0,
+          "afterPoints": 12
+        }
+      ]
+    },
+    "tooooo": {
+      "username": "tooooo",
+      "totalAmount": 0,
+      "earnedPoints": 10,
+      "totalPoints": 524,
+      "totalDeducted": 0,
+      "orderCount": 0,
+      "orders": [],
+      "deductHistory": [
+        {
+          "points": -10,
+          "reason": "每日签到奖励 (连续1天)",
+          "time": "2026-01-11T12:54:17.330Z",
+          "previousPoints": 0,
+          "afterPoints": 10
+        },
+        {
+          "points": -990,
+          "reason": "管理员设置积分",
+          "time": "2026-01-11T12:54:39.035Z",
+          "previousPoints": 10,
+          "afterPoints": 1000,
+          "type": "admin_set"
+        },
+        {
+          "points": 45,
+          "reason": "创建服务器 (高级版) - 实例ID: 670e2524216e4dcfb17db807310740d1",
+          "time": "2026-01-11T12:55:51.485Z",
+          "previousPoints": 1000,
+          "afterPoints": 955
+        },
+        {
+          "points": 45,
+          "reason": "创建服务器 (高级版) - 实例ID: 18c5e5312d1a4ce38b4285ac3d736763",
+          "time": "2026-01-11T12:56:20.823Z",
+          "previousPoints": 955,
+          "afterPoints": 910
+        },
+        {
+          "points": 31,
+          "reason": "创建服务器 (自定义配置) - 实例ID: 995d57c4f00b4a63b560e810e1a970bc",
+          "time": "2026-01-11T13:21:50.463Z",
+          "previousPoints": 910,
+          "afterPoints": 879
+        },
+        {
+          "points": 175,
+          "reason": "创建服务器 (自定义配置) - 实例ID: 18c2b2d21fff48d78c766774c4d86216",
+          "time": "2026-01-11T13:47:44.723Z",
+          "previousPoints": 879,
+          "afterPoints": 704
+        },
+        {
+          "points": 36,
+          "reason": "创建服务器 (自定义配置) - 实例ID: 5b6814b2a3804bc8b3d2502350014989",
+          "time": "2026-01-11T13:51:49.962Z",
+          "previousPoints": 704,
+          "afterPoints": 668
+        },
+        {
+          "points": 36,
+          "reason": "创建服务器 (自定义配置) - 实例ID: bd21273828cf46569542e07e51fcce52",
+          "time": "2026-01-11T13:56:26.604Z",
+          "previousPoints": 668,
+          "afterPoints": 632
+        },
+        {
+          "points": 36,
+          "reason": "创建服务器 (自定义配置) - 实例ID: 948752820cb0462294ae98452864673d",
+          "time": "2026-01-11T13:59:20.505Z",
+          "previousPoints": 632,
+          "afterPoints": 596
+        },
+        {
+          "points": 36,
+          "reason": "创建服务器 (自定义配置) - 实例ID: 25e231409db9435b82adc6da12d2e34c",
+          "time": "2026-01-11T14:03:11.119Z",
+          "previousPoints": 596,
+          "afterPoints": 560
+        },
+        {
+          "points": 36,
+          "reason": "创建服务器 (自定义配置) - 实例ID: 6092b70ae7974562839f389796a9451a",
+          "time": "2026-01-11T14:07:18.439Z",
+          "previousPoints": 560,
+          "afterPoints": 524
+        }
+      ]
+    }
+  }
+}
