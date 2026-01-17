@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>充值记录</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: #1890ff;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    .header h1 {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    .content {
+      padding: 20px;
+    }
+    
+    .result-box {
+      text-align: center;
+      padding: 24px 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+    
+    .result-box.loading {
+      background: #f0f5ff;
+    }
+    
+    .result-box.success {
+      background: #f6ffed;
+      border: 1px solid #b7eb8f;
+    }
+    
+    .result-box.error {
+      background: #fff2f0;
+      border: 1px solid #ffccc7;
+    }
+    
+    .result-box.wait {
+      background: #fffbe6;
+      border: 1px solid #ffe58f;
+    }
+    
+    .result-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    
+    .result-title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    
+    .result-box.success .result-title { color: #52c41a; }
+    .result-box.error .result-title { color: #ff4d4f; }
+    .result-box.wait .result-title { color: #faad14; }
+    .result-box.loading .result-title { color: #1890ff; }
+    
+    .result-msg {
+      font-size: 13px;
+      color: #666;
+    }
+    
+    .detail-box {
+      background: #fafafa;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    
+    .detail-box h3 {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 13px;
+    }
+    
+    .detail-row .label {
+      color: #888;
+    }
+    
+    .detail-row .val {
+      color: #333;
+    }
+    
+    .detail-row .val.big {
+      color: #1890ff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .btn-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    .btn-blue {
+      background: #1890ff;
+      color: #fff;
+    }
+    
+    .btn-blue:hover {
+      background: #40a9ff;
+    }
+    
+    .btn-gray {
+      background: #f0f0f0;
+      color: #333;
+    }
+    
+    .btn-gray:hover {
+      background: #e0e0e0;
+    }
+    
+    .list-section {
+      margin-top: 20px;
+    }
+    
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .list-header h3 {
+      font-size: 15px;
+      color: #333;
+    }
+    
+    .list-header .refresh {
+      font-size: 12px;
+      color: #1890ff;
+      cursor: pointer;
+      padding: 4px 10px;
+      background: #f0f5ff;
+      border-radius: 4px;
+    }
+    
+    .list-header .refresh:hover {
+      background: #e6f0ff;
+    }
+    
+    .order-card {
+      background: #fafafa;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .order-card .info {
+      flex: 1;
+    }
+    
+    .order-card .oid {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    
+    .order-card .money {
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .order-card .time {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 4px;
+    }
+    
+    .order-card .tag {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .order-card .tag.ok {
+      background: #f6ffed;
+      color: #52c41a;
+    }
+    
+    .order-card .tag.fail {
+      background: #fff2f0;
+      color: #ff4d4f;
+    }
+    
+    .order-card .tag.wait {
+      background: #fffbe6;
+      color: #faad14;
+    }
+    
+    .empty {
+      text-align: center;
+      padding: 32px 16px;
+      color: #888;
+      font-size: 13px;
+    }
+    
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #f0f0f0;
+      border-top-color: #1890ff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>充值记录</h1>
+    </div>
+    
+    <div class="content">
+      <div id="singleView" style="display: none;">
+        <div class="result-box loading" id="resultBox">
+          <div class="result-icon" id="resultIcon"><div class="spinner"></div></div>
+          <div class="result-title" id="resultTitle">查询中...</div>
+          <div class="result-msg" id="resultMsg">请稍候</div>
+        </div>
+        
+        <div class="detail-box" id="detailBox">
+          <h3>订单信息</h3>
+          <div class="detail-row">
+            <span class="label">订单号</span>
+            <span class="val" id="dOrderId">--</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">金额</span>
+            <span class="val big" id="dAmount">--</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">积分</span>
+            <span class="val" id="dPoints">--</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">时间</span>
+            <span class="val" id="dTime">--</span>
+          </div>
+        </div>
+        
+        <div class="btn-row">
+          <a href="recharge.html" class="btn btn-blue">继续充值</a>
+          <button class="btn btn-gray" onclick="refresh()">刷新</button>
+        </div>
+      </div>
+      
+      <div id="listView">
+        <div class="list-section">
+          <div class="list-header">
+            <h3>全部记录</h3>
+            <span class="refresh" onclick="loadList()">刷新</span>
+          </div>
+          <div id="listBox">
+            <div class="empty"><div class="spinner"></div>加载中...</div>
+          </div>
+        </div>
+        
+        <div class="btn-row" style="margin-top: 16px;">
+          <a href="recharge.html" class="btn btn-blue">去充值</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var POINTS_RATIO = 1; // 默认值，会从API获取
+    var ORDERS_URL = '/api/orders'; // 使用本地订单接口
+    var CONFIG_URL = '/api/config';
+    var orderId = null;
+    var pollNum = 0;
+    var maxPoll = 20;
+    var pollTime = 3000;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // 先加载配置
+      loadConfig().then(function() {
+        var p = new URLSearchParams(window.location.search);
+        orderId = p.get('order_id');
+        
+        if (orderId) {
+          document.getElementById('singleView').style.display = 'block';
+          document.getElementById('listView').style.display = 'none';
+          poll();
+        } else {
+          document.getElementById('singleView').style.display = 'none';
+          document.getElementById('listView').style.display = 'block';
+          loadList();
+        }
+      });
+    });
+    
+    // 从后端加载配置
+    function loadConfig() {
+      return fetch(CONFIG_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            POINTS_RATIO = data.data.pointsRatio || 1;
+            // 保持使用本地订单接口，不覆盖
+          }
+        })
+        .catch(function(e) {
+          console.error('加载配置失败:', e);
+        });
+    }
+    
+    function poll() {
+      pollNum = 0;
+      check();
+    }
+    
+    function check() {
+      fetch(ORDERS_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.status !== 'success') throw new Error('fail');
+          var orders = data.orders || {};
+          var o = orders[orderId];
+          if (o) {
+            showResult(o);
+            if (o.status === 'paid' || o.status === 'failed') return;
+          }
+          pollNum++;
+          if (pollNum < maxPoll) setTimeout(check, pollTime);
+          else showWait();
+        })
+        .catch(function() {
+          pollNum++;
+          if (pollNum < maxPoll) setTimeout(check, pollTime);
+          else showErr('查询超时');
+        });
+    }
+    
+    function showResult(o) {
+      var box = document.getElementById('resultBox');
+      var icon = document.getElementById('resultIcon');
+      var title = document.getElementById('resultTitle');
+      var msg = document.getElementById('resultMsg');
+      var detail = document.getElementById('detailBox');
+      
+      box.className = 'result-box';
+      
+      if (o.status === 'paid') {
+        box.classList.add('success');
+        icon.textContent = '✓';
+        title.textContent = '充值成功';
+        msg.textContent = '积分已到账';
+        
+        detail.style.display = 'block';
+        document.getElementById('dOrderId').textContent = o.order_id;
+        document.getElementById('dAmount').textContent = '¥' + o.amount;
+        document.getElementById('dPoints').textContent = '+' + (parseFloat(o.amount) * POINTS_RATIO);
+        document.getElementById('dTime').textContent = fmtTime(o.paid_at);
+      } else if (o.status === 'failed') {
+        box.classList.add('error');
+        icon.textContent = '✗';
+        title.textContent = '支付失败';
+        msg.textContent = o.reason || '请重试';
+        
+        detail.style.display = 'block';
+        document.getElementById('dOrderId').textContent = o.order_id;
+        document.getElementById('dAmount').textContent = '¥' + o.amount;
+        document.getElementById('dPoints').textContent = '--';
+        document.getElementById('dTime').textContent = fmtTime(o.failed_at);
+      } else {
+        box.classList.add('wait');
+        icon.textContent = '...';
+        title.textContent = '等待支付';
+        msg.textContent = '订单已创建';
+      }
+    }
+    
+    function showWait() {
+      var box = document.getElementById('resultBox');
+      box.className = 'result-box wait';
+      document.getElementById('resultIcon').textContent = '?';
+      document.getElementById('resultTitle').textContent = '未查到结果';
+      document.getElementById('resultMsg').textContent = '如已支付请稍后刷新';
+    }
+    
+    function showErr(m) {
+      var box = document.getElementById('resultBox');
+      box.className = 'result-box error';
+      document.getElementById('resultIcon').textContent = '!';
+      document.getElementById('resultTitle').textContent = '查询失败';
+      document.getElementById('resultMsg').textContent = m;
+    }
+    
+    function refresh() {
+      var box = document.getElementById('resultBox');
+      box.className = 'result-box loading';
+      document.getElementById('resultIcon').innerHTML = '<div class="spinner"></div>';
+      document.getElementById('resultTitle').textContent = '查询中...';
+      document.getElementById('resultMsg').textContent = '请稍候';
+      document.getElementById('detailBox').style.display = 'none';
+      poll();
+    }
+    
+    function loadList() {
+      var box = document.getElementById('listBox');
+      box.innerHTML = '<div class="empty"><div class="spinner"></div>加载中...</div>';
+      
+      fetch(ORDERS_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.status !== 'success') throw new Error('fail');
+          var orders = data.orders || {};
+          var list = Object.values(orders);
+          
+          if (list.length === 0) {
+            box.innerHTML = '<div class="empty">暂无记录</div>';
+            return;
+          }
+          
+          list.sort(function(a, b) {
+            var ta = a.paid_at || a.failed_at || a.created_at || '';
+            var tb = b.paid_at || b.failed_at || b.created_at || '';
+            return tb.localeCompare(ta);
+          });
+          
+          var html = '';
+          list.forEach(function(o) {
+            var cls = o.status === 'paid' ? 'ok' : (o.status === 'failed' ? 'fail' : 'wait');
+            var txt = o.status === 'paid' ? '成功' : (o.status === 'failed' ? '失败' : '待付');
+            var t = o.paid_at || o.failed_at || o.created_at || '';
+            
+            html += '<div class="order-card">' +
+              '<div class="info">' +
+                '<div class="oid">' + o.order_id + '</div>' +
+                '<div class="money">¥' + o.amount + '</div>' +
+                '<div class="time">' + fmtTime(t) + '</div>' +
+              '</div>' +
+              '<div class="tag ' + cls + '">' + txt + '</div>' +
+            '</div>';
+          });
+          
+          box.innerHTML = html;
+        })
+        .catch(function() {
+          box.innerHTML = '<div class="empty">加载失败，请刷新</div>';
+        });
+    }
+    
+    function fmtTime(s) {
+      if (!s) return '--';
+      try {
+        var d = new Date(s);
+        return d.getFullYear() + '-' +
+          String(d.getMonth() + 1).padStart(2, '0') + '-' +
+          String(d.getDate()).padStart(2, '0') + ' ' +
+          String(d.getHours()).padStart(2, '0') + ':' +
+          String(d.getMinutes()).padStart(2, '0');
+      } catch (e) {
+        return s;
+      }
+    }
+  </script>
+</body>
+</html>
