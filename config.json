@@ -1,0 +1,162 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 3000
+  },
+  "services": {
+    "payment": {
+      "enabled": true,
+      "prefix": "/payment",
+      "backend": {
+        "host": "YOU_IP",
+        "port": 5001,
+        "path": "/query_payment"
+      }
+    },
+    "recharge": {
+      "enabled": true,
+      "prefix": "/recharge",
+      "pointsRatio": 6,
+      "sync": {
+        "interval": 5000,
+        "enabled": true
+      }
+    },
+    "admin": {
+      "enabled": true,
+      "prefix": "/admin"
+    }
+  },
+  "mcsm": {
+    "panelUrl": "YOU_MCSM_WEB_IP",
+    "apiKey": "An API key with administrator privileges",
+    "daemonId": "",
+    "userDataPath": "/opt/mcsmanager/web/data/User",
+    "daemonDataPath": "/opt/mcsmanager/daemon/data/InstanceData",
+    "afterPurchaseCommand": ""
+  },
+  "docker": {
+    "defaultImage": "azul/zulu-openjdk-debian:17-latest",
+    "availableImages": [
+      {
+        "id": "java21",
+        "name": "Java 21 (Zulu OpenJDK)",
+        "image": "azul/zulu-openjdk-debian:21-latest",
+        "description": "适用于 Minecraft 1.20.5+ 等需要 Java 21 的服务端"
+      },
+      {
+        "id": "java17",
+        "name": "Java 17 (Zulu OpenJDK)",
+        "image": "azul/zulu-openjdk-debian:17-latest",
+        "description": "适用于 Minecraft 1.17-1.20.4 等需要 Java 17 的服务端"
+      },
+      {
+        "id": "java8",
+        "name": "Java 8 (Zulu OpenJDK)",
+        "image": "azul/zulu-openjdk-debian:8-latest",
+        "description": "适用于 Minecraft 1.16 及更早版本等需要 Java 8 的服务端"
+      },
+      {
+        "id": "mcdr",
+        "name": "MCDReforged (Python 3.12)",
+        "image": "mcdreforged/mcdreforged:dev-py3.12",
+        "description": "MCDReforged 服务端管理框架，适用于需要插件管理的服务器"
+      }
+    ]
+  },
+  "renewal": {
+    "pricePerDay": 0.33,
+    "minAmount": 10,
+    "defaultDays": 30
+  },
+  "customPlan": {
+    "enabled": true,
+    "pointsFormula": {
+      "memoryPerMB": 0.01,
+      "cpuPerPercent": 0.1,
+      "diskPerGB": 0.5,
+      "perPort": 5
+    },
+    "limits": {
+      "minMemory": 512,
+      "maxMemory": 16384,
+      "minCpu": 50,
+      "maxCpu": 400,
+      "minDisk": 5,
+      "maxDisk": 100,
+      "minPorts": 1,
+      "maxPorts": 10
+    },
+    "defaultDuration": 30
+  },
+  "serverPlans": {
+    "docker_basic": {
+      "name": "基础版",
+      "points": 20,
+      "description": "1核1G内存，开服务器别想了,开个bot可以",
+      "specs": {
+        "cpu": 1,
+        "memory": 1024,
+        "storage": "10G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      }
+    },
+    "docker_standard": {
+      "name": "标准版",
+      "points": 25,
+      "description": "2核2G内存，朋友联机用刚刚好",
+      "specs": {
+        "cpu": 2,
+        "memory": 2048,
+        "storage": "20G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      }
+    },
+    "docker_premium": {
+      "name": "高级版",
+      "points": 45,
+      "description": "4核4G内存，开个插件服挺好的",
+      "specs": {
+        "cpu": 4,
+        "memory": 4096,
+        "storage": "50G",
+        "duration": 30,
+        "docker": {
+          "image": "openjdk:17-slim",
+          "ports": [
+            "25565:25565"
+          ],
+          "networkMode": "bridge"
+        }
+      }
+    }
+  },
+  "checkin": {
+    "enabled": true,
+    "basePoints": 10,
+    "continuousBonus": 5,
+    "maxContinuousBonus": 50
+  },
+  "rootAdmin": {
+    "password": "admin123456"
+  },
+  "cors": {
+    "allowedOrigins": [
+      "*"
+    ]
+  }
+}
