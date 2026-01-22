@@ -1,0 +1,17 @@
+{
+  "name": "integrated-payment-system",
+  "version": "1.0.0",
+  "description": "整合的支付充值管理系统",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "payment",
+    "recharge",
+    "management"
+  ],
+  "author": "",
+  "license": "ISC"
+}
