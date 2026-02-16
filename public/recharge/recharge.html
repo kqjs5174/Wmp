@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>充值中心</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: #1890ff;
+      color: #fff;
+      padding: 24px 20px;
+    }
+    
+    .header h1 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    
+    .header-desc {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-bottom: 16px;
+    }
+    
+    .user-section {
+      margin-top: 12px;
+    }
+    
+    .user-section label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      opacity: 0.9;
+    }
+    
+    .user-row {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .user-row input {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .user-row button {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    .user-row button:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .user-display {
+      display: none;
+      font-size: 14px;
+    }
+    
+    .user-display .name {
+      font-weight: 500;
+    }
+    
+    .user-display .change {
+      margin-left: 8px;
+      font-size: 12px;
+      opacity: 0.8;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    .points-row {
+      margin-top: 10px;
+      font-size: 13px;
+      display: none;
+    }
+    
+    .points-row span {
+      font-size: 20px;
+      font-weight: 500;
+    }
+    
+    .content {
+      padding: 20px;
+      display: none;
+    }
+    
+    .section-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    
+    .amount-item {
+      padding: 12px 8px;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    
+    .amount-item:hover {
+      border-color: #1890ff;
+    }
+    
+    .amount-item.selected {
+      border-color: #1890ff;
+      background: #e6f7ff;
+    }
+    
+    .amount-item .num {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .amount-item .unit {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .amount-item .pts {
+      font-size: 11px;
+      color: #999;
+      margin-top: 2px;
+    }
+    
+    .custom-input {
+      margin-bottom: 16px;
+    }
+    
+    .custom-input label {
+      display: block;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    
+    .input-box {
+      display: flex;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .input-box:focus-within {
+      border-color: #1890ff;
+    }
+    
+    .input-box .symbol {
+      padding: 8px 12px;
+      background: #fafafa;
+      color: #666;
+      border-right: 1px solid #d9d9d9;
+    }
+    
+    .input-box input {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #1890ff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    
+    .submit-btn:hover {
+      background: #40a9ff;
+    }
+    
+    .submit-btn:disabled {
+      background: #d9d9d9;
+      cursor: not-allowed;
+    }
+    
+    .info-box {
+      margin-top: 16px;
+      padding: 12px;
+      background: #fafafa;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.8;
+    }
+    
+    .info-box h4 {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    
+    .info-box ul {
+      padding-left: 16px;
+      margin: 0;
+    }
+    
+    .link-row {
+      margin-top: 16px;
+      text-align: center;
+    }
+    
+    .link-row a {
+      color: #1890ff;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    
+    .link-row a:hover {
+      text-decoration: underline;
+    }
+    
+    /* 签到样式 */
+    .checkin-section {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
+      color: #fff;
+    }
+    
+    .checkin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .checkin-title {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .checkin-btn {
+      padding: 8px 20px;
+      background: #fff;
+      color: #667eea;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .checkin-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .checkin-btn:disabled {
+      background: rgba(255,255,255,0.5);
+      color: rgba(102,126,234,0.7);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .checkin-btn.checked {
+      background: rgba(255,255,255,0.3);
+      color: #fff;
+    }
+    
+    .checkin-info {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    
+    .checkin-info-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .checkin-info-item .num {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .checkin-reward {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 12px;
+      opacity: 0.85;
+    }
+    
+    .checkin-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 200;
+      display: none;
+      text-align: center;
+    }
+    
+    .checkin-toast.show {
+      display: block;
+      animation: fadeInOut 2s ease;
+    }
+    
+    .checkin-toast .points-add {
+      font-size: 24px;
+      font-weight: 600;
+      color: #52c41a;
+      margin: 8px 0;
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    }
+    
+    .loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    
+    .loading.show {
+      display: flex;
+    }
+    
+    .loading-content {
+      background: #fff;
+      padding: 24px 32px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #f0f0f0;
+      border-top-color: #1890ff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .welcome-info {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    
+    .welcome-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    .welcome-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    
+    .welcome-text {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+    }
+    
+    .welcome-tips {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .tip-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .tip-num {
+      width: 20px;
+      height: 20px;
+      background: #1890ff;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>充值中心</h1>
+      <div class="header-desc" id="headerDesc">充值积分，享受更多服务</div>
+      
+      <div class="user-section" id="userSection">
+        <label>请输入用户名开始充值</label>
+        <div class="user-row" id="userInput">
+          <input type="text" id="usernameField" placeholder="输入用户名" />
+          <button onclick="setUser()">确定</button>
+        </div>
+        <div class="user-display" id="userDisplay">
+          <span class="name" id="userName"></span>
+        </div>
+      </div>
+      
+      <div class="points-row" id="pointsRow">
+        积分：<span id="points">0</span>
+      </div>
+    </div>
+    
+    <div class="welcome-info" id="welcomeInfo">
+      <div class="welcome-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 48px; height: 48px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </div>
+      <div class="welcome-title">积分充值</div>
+      <div class="welcome-text">输入用户名后即可选择充值金额</div>
+      <div class="welcome-tips">
+        <div class="tip-item"><span class="tip-num">1</span>输入用户名</div>
+        <div class="tip-item"><span class="tip-num">2</span>选择充值金额</div>
+        <div class="tip-item"><span class="tip-num">3</span>完成支付获得积分</div>
+      </div>
+    </div>
+    
+    <div class="content" id="mainContent">
+      <!-- 签到区域 -->
+      <div class="checkin-section" id="checkinSection">
+        <div class="checkin-header">
+          <div class="checkin-title"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M12 12.75h.008v.008H12v-.008z" />
+          </svg>每日签到</div>
+          <button class="checkin-btn" id="checkinBtn" onclick="doCheckin()">签到领积分</button>
+        </div>
+        <div class="checkin-info">
+          <div class="checkin-info-item">
+            <span>累计签到</span>
+            <span class="num" id="totalCheckins">0</span>
+            <span>天</span>
+          </div>
+          <div class="checkin-info-item">
+            <span>今日可得</span>
+            <span class="num" id="todayReward">1-12</span>
+            <span>积分</span>
+          </div>
+        </div>
+        <div class="checkin-reward" id="checkinReward">
+          每日签到随机获得 1-12 积分
+        </div>
+      </div>
+      
+      <div class="section-label">选择金额</div>
+      <div class="amount-grid" id="amountGrid">
+        <!-- 动态生成 -->
+      </div>
+      
+      <div class="custom-input">
+        <label>自定义金额</label>
+        <div class="input-box">
+          <span class="symbol">¥</span>
+          <input type="number" id="customField" placeholder="输入金额" min="1" max="10000" />
+        </div>
+      </div>
+      
+      <button class="submit-btn" id="submitBtn" onclick="pay()">立即充值</button>
+      
+      <div class="info-box">
+        <h4>说明</h4>
+        <ul>
+          <li id="ratioInfo">1元 = 1积分</li>
+          <li>金额范围：1-10000元</li>
+          <li>充值后积分实时到账</li>
+        </ul>
+      </div>
+      
+      <div class="link-row">
+        <a href="recharge_result.html">充值记录</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="loading" id="loading">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <div>处理中...</div>
+    </div>
+  </div>
+  
+  <!-- 签到成功提示 -->
+  <div class="checkin-toast" id="checkinToast">
+    <div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px;height:20px;vertical-align:middle;margin-right:8px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>签到成功</div>
+    <div class="points-add" id="checkinPointsAdd">+10</div>
+    <div id="checkinToastMsg">连续签到 1 天</div>
+  </div>
+
+  <script>
+    var amount = 0;
+    var username = '';
+    var POINTS_RATIO = 1; // 默认值，会从API获取
+    var PAY_URL = ''; // 支付接口地址，从配置获取
+    var ORDERS_URL = '/api/orders'; // 使用本地订单接口
+    var CONFIG_URL = '/api/config';
+    var USER_VALIDATE_URL = '/api/user/validate'; // 本地用户验证接口
+    var USER_POINTS_URL = '/api/user/points'; // 本地用户积分接口
+    var CHECKIN_URL = '/api/checkin'; // 签到接口
+    var CHECKIN_STATUS_URL = '/api/checkin/status'; // 签到状态接口
+    var CHECKIN_CONFIG_URL = '/api/checkin/config'; // 签到配置接口
+    
+    // 签到配置
+    var checkinConfig = {
+      basePoints: 10,
+      continuousBonus: 5,
+      maxContinuousBonus: 50
+    };
+    
+    // 金额选项
+    var amountOptions = [10, 30, 50, 100, 200, 500];
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // 先加载配置
+      loadConfig().then(function() {
+        initGrid();
+        initCustom();
+        
+        // 优先从 currentUser 获取登录用户名（管理页面登录后存储）
+        var currentUserStr = localStorage.getItem('currentUser');
+        var saved = localStorage.getItem('recharge_user');
+        var autoUsername = null;
+        
+        if (currentUserStr) {
+          try {
+            var currentUser = JSON.parse(currentUserStr);
+            if (currentUser && currentUser.username) {
+              autoUsername = currentUser.username;
+            }
+          } catch (e) {
+            console.error('解析 currentUser 失败:', e);
+          }
+        }
+        
+        // 如果有登录用户，自动设置
+        if (autoUsername) {
+          document.getElementById('usernameField').value = autoUsername;
+          setUser();
+        } else if (saved) {
+          // 否则使用之前保存的用户名
+          document.getElementById('usernameField').value = saved;
+          setUser();
+        }
+        
+        document.getElementById('usernameField').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') setUser();
+        });
+      });
+    });
+    
+    // 从后端加载配置
+    function loadConfig() {
+      return fetch(CONFIG_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            POINTS_RATIO = data.data.pointsRatio || 1;
+            // 设置支付接口地址
+            if (data.data.payUrl) {
+              PAY_URL = data.data.payUrl;
+            }
+            // 更新说明文字
+            document.getElementById('ratioInfo').textContent = '1元 = ' + POINTS_RATIO + '积分';
+          }
+        })
+        .catch(function(e) {
+          console.error('加载配置失败:', e);
+        });
+    }
+    
+    // 验证用户是否存在（使用本地API）
+    function validateUser(inputUsername) {
+      return fetch(USER_VALIDATE_URL + '?username=' + encodeURIComponent(inputUsername))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            return data.data.exists;
+          }
+          return false;
+        })
+        .catch(function(e) {
+          console.error('验证用户失败:', e);
+          // 验证失败时默认允许（可能是没有配置用户列表）
+          return true;
+        });
+    }
+    
+    function initGrid() {
+      var grid = document.getElementById('amountGrid');
+      var html = '';
+      
+      amountOptions.forEach(function(val) {
+        var pts = val * POINTS_RATIO;
+        html += '<div class="amount-item" data-val="' + val + '">' +
+          '<div class="num">' + val + '</div>' +
+          '<div class="unit">元</div>' +
+          '<div class="pts">' + pts + '积分</div>' +
+        '</div>';
+      });
+      
+      grid.innerHTML = html;
+      
+      // 绑定点击事件
+      var items = document.querySelectorAll('.amount-item');
+      items.forEach(function(item) {
+        item.addEventListener('click', function() {
+          items.forEach(function(i) { i.classList.remove('selected'); });
+          item.classList.add('selected');
+          amount = parseInt(item.dataset.val);
+          document.getElementById('customField').value = '';
+        });
+      });
+    }
+    
+    function initCustom() {
+      var field = document.getElementById('customField');
+      field.addEventListener('input', function() {
+        document.querySelectorAll('.amount-item').forEach(function(i) {
+          i.classList.remove('selected');
+        });
+        amount = parseInt(field.value) || 0;
+      });
+    }
+    
+    function setUser() {
+      var val = document.getElementById('usernameField').value.trim();
+      if (!val) {
+        alert('请输入用户名');
+        return;
+      }
+      
+      // 显示加载状态
+      showLoading(true);
+      
+      // 验证用户是否存在
+      validateUser(val).then(function(exists) {
+        showLoading(false);
+        
+        if (!exists) {
+          alert('用户不存在，请检查用户名是否正确');
+          return;
+        }
+        
+        username = val;
+        localStorage.setItem('recharge_user', val);
+        
+        document.getElementById('userInput').style.display = 'none';
+        document.getElementById('userDisplay').style.display = 'block';
+        document.getElementById('userName').textContent = val;
+        document.getElementById('pointsRow').style.display = 'block';
+        document.getElementById('welcomeInfo').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        document.getElementById('headerDesc').style.display = 'none';
+        
+        loadPoints();
+      });
+    }
+    
+    function switchUser() {
+      username = '';
+      localStorage.removeItem('recharge_user');
+      document.getElementById('userInput').style.display = 'flex';
+      document.getElementById('userDisplay').style.display = 'none';
+      document.getElementById('pointsRow').style.display = 'none';
+      document.getElementById('welcomeInfo').style.display = 'block';
+      document.getElementById('mainContent').style.display = 'none';
+      document.getElementById('headerDesc').style.display = 'block';
+      document.getElementById('usernameField').value = '';
+      document.getElementById('points').textContent = '0';
+    }
+    
+    function loadPoints() {
+      if (!username) return;
+      
+      // 使用本地用户积分接口
+      fetch(USER_POINTS_URL + '?username=' + encodeURIComponent(username))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            document.getElementById('points').textContent = data.data.totalPoints || 0;
+          } else {
+            document.getElementById('points').textContent = '0';
+          }
+        })
+        .catch(function() {
+          document.getElementById('points').textContent = '--';
+        });
+    }
+    
+    function showLoading(show) {
+      var el = document.getElementById('loading');
+      if (show) el.classList.add('show');
+      else el.classList.remove('show');
+    }
+    
+    function genOrderId() {
+      var d = new Date();
+      var ts = d.getFullYear().toString() +
+        String(d.getMonth() + 1).padStart(2, '0') +
+        String(d.getDate()).padStart(2, '0') +
+        String(d.getHours()).padStart(2, '0') +
+        String(d.getMinutes()).padStart(2, '0') +
+        String(d.getSeconds()).padStart(2, '0');
+      var rand = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+      return username + '_' + ts + '_' + rand;
+    }
+    
+    function pay() {
+      if (!amount || amount < 1) {
+        alert('请选择或输入金额');
+        return;
+      }
+      if (amount > 10000) {
+        alert('金额不能超过10000元');
+        return;
+      }
+      
+      showLoading(true);
+      
+      var orderId = genOrderId();
+      
+      setTimeout(function() {
+        showLoading(false);
+        var url = PAY_URL + '?amount=' + amount + '&order_id=' + encodeURIComponent(orderId);
+        window.open(url, '_blank');
+        
+        setTimeout(function() {
+          if (confirm('支付完成后点击确定查看结果')) {
+            window.location.href = 'recharge_result.html?order_id=' + encodeURIComponent(orderId);
+          }
+        }, 500);
+      }, 300);
+    }
+    
+    // ========== 签到功能 ==========
+    
+    // 加载签到配置
+    function loadCheckinConfig() {
+      return fetch(CHECKIN_CONFIG_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            checkinConfig = data.data;
+            updateCheckinRewardText();
+          }
+        })
+        .catch(function(e) {
+          console.error('加载签到配置失败:', e);
+        });
+    }
+    
+    // 更新签到奖励说明文字
+    function updateCheckinRewardText() {
+      // 随机积分模式，不需要更新文字
+      document.getElementById('checkinReward').textContent = '每日签到随机获得 1-12 积分';
+    }
+    
+    // 加载签到状态
+    function loadCheckinStatus() {
+      if (!username) return;
+      
+      fetch(CHECKIN_STATUS_URL + '?username=' + encodeURIComponent(username))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            var status = data.data;
+            
+            // 更新累计签到天数
+            document.getElementById('totalCheckins').textContent = status.totalCheckins || 0;
+            
+            // 今日可得积分显示为范围（随机模式）
+            document.getElementById('todayReward').textContent = '1-12';
+            
+            // 更新按钮状态
+            var btn = document.getElementById('checkinBtn');
+            if (status.hasCheckedInToday) {
+              btn.textContent = '今日已签到 ✓';
+              btn.classList.add('checked');
+              btn.disabled = true;
+            } else {
+              btn.textContent = '签到领积分';
+              btn.classList.remove('checked');
+              btn.disabled = false;
+            }
+          }
+        })
+        .catch(function(e) {
+          console.error('加载签到状态失败:', e);
+        });
+    }
+    
+    // 执行签到
+    function doCheckin() {
+      if (!username) {
+        alert('请先登录');
+        return;
+      }
+      
+      var btn = document.getElementById('checkinBtn');
+      if (btn.disabled) return;
+      
+      btn.disabled = true;
+      btn.textContent = '签到中...';
+      
+      fetch(CHECKIN_URL + '?username=' + encodeURIComponent(username))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.code === 0 && data.data) {
+            var result = data.data;
+            
+            // 显示签到成功提示 (后端返回 rewardPoints 和 totalCheckins)
+            showCheckinToast(result.rewardPoints, result.totalCheckins);
+            
+            // 更新按钮状态
+            btn.textContent = '今日已签到 ✓';
+            btn.classList.add('checked');
+            
+            // 更新累计签到天数
+            document.getElementById('totalCheckins').textContent = result.totalCheckins;
+            
+            // 刷新积分显示
+            loadPoints();
+            
+            // 今日可得积分保持显示范围
+            document.getElementById('todayReward').textContent = '1-12';
+          } else {
+            alert(data.msg || '签到失败');
+            btn.disabled = false;
+            btn.textContent = '签到领积分';
+          }
+        })
+        .catch(function(e) {
+          console.error('签到失败:', e);
+          alert('签到失败，请稍后重试');
+          btn.disabled = false;
+          btn.textContent = '签到领积分';
+        });
+    }
+    
+    // 显示签到成功提示
+    function showCheckinToast(points, totalDays) {
+      var toast = document.getElementById('checkinToast');
+      document.getElementById('checkinPointsAdd').textContent = '+' + points;
+      document.getElementById('checkinToastMsg').textContent = '累计签到 ' + totalDays + ' 天';
+      
+      toast.classList.add('show');
+      
+      setTimeout(function() {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+    
+    // 修改 setUser 函数，在用户登录后加载签到状态
+    var originalSetUser = setUser;
+    setUser = function() {
+      var val = document.getElementById('usernameField').value.trim();
+      if (!val) {
+        alert('请输入用户名');
+        return;
+      }
+      
+      showLoading(true);
+      
+      validateUser(val).then(function(exists) {
+        showLoading(false);
+        
+        if (!exists) {
+          alert('用户不存在，请检查用户名是否正确');
+          return;
+        }
+        
+        username = val;
+        localStorage.setItem('recharge_user', val);
+        
+        document.getElementById('userInput').style.display = 'none';
+        document.getElementById('userDisplay').style.display = 'block';
+        document.getElementById('userName').textContent = val;
+        document.getElementById('pointsRow').style.display = 'block';
+        document.getElementById('welcomeInfo').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        document.getElementById('headerDesc').style.display = 'none';
+        
+        loadPoints();
+        loadCheckinConfig().then(function() {
+          loadCheckinStatus();
+        });
+      });
+    };
+  </script>
+</body>
+</html>
