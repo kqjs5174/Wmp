@@ -1,0 +1,151 @@
+# ============== 服务器配置 ==============
+server:
+  host: 0.0.0.0              # 监听地址，0.0.0.0 表示监听所有网卡
+  port: 3000                 # 服务端口
+  ssl:
+    enabled: false           # 是否启用 HTTPS
+    key: ssl/key.pem         # SSL 私钥文件路径
+    cert: ssl/cert.pem       # SSL 证书文件路径
+
+# ============== 服务模块配置 ==============
+services:
+  payment:
+    enabled: true            # 是否启用支付功能
+    prefix: /payment         # 支付页面路径前缀
+    backend:
+      url: http://YOU_PAY_IP/query_payment  # 支付查询API地址
+      timeout: 10000         # 请求超时时间（毫秒）
+  
+  recharge:
+    enabled: true            # 是否启用充值功能
+    prefix: /recharge        # 充值页面路径前缀
+    pointsRatio: 6           # 充值比例（1元 = 6积分）
+    verificationWindow: 300  # 支付验证时间窗口（秒）
+  
+  admin:
+    enabled: true            # 是否启用管理面板
+    prefix: /admin           # 管理面板路径前缀
+
+# ============== MCSManager 面板配置 ==============
+mcsm:
+  panelUrl: https://panel.example.com:23333  # MCSManager 面板地址（请修改）
+  apiKey: YOUR_API_KEY_HERE                  # MCSManager API 密钥（请修改）
+  daemonId: ''                               # 默认守护进程 ID（可选）
+  userDataPath: ''                           # 用户数据路径（可选）
+  daemonDataPath: ''                         # 守护进程数据路径（可选）
+
+# ============== 续费配置 ==============
+renewal:
+  pricePerDay: 0.4          # 每天续费价格（积分）
+  minAmount: 10             # 最小续费金额
+  defaultDays: 30           # 默认续费天数
+
+# ============== 自动续费配置 ==============
+autoRenewal:
+  enabled: true             # 是否启用自动续费功能
+  checkInterval: 15         # 检查间隔（分钟）
+  defaultAdvanceDays: 3     # 默认提前续费天数
+  defaultRenewalDays: 30    # 默认续费天数
+  minPointsReserve: 50      # 默认最低积分保留
+  maxRetries: 3             # 失败重试次数
+  notifyOnSuccess: true     # 续费成功是否通知
+  notifyOnFailure: true     # 续费失败是否通知
+
+# ============== 认证配置 ==============
+auth:
+  method: mcsm_bcrypt       # 认证方式：local（本地）或 mcsm_bcrypt（MCSManager）
+  jwtSecret: "5954adb81f8b955b4fda79d2ceb0f22b952a78565cc169d6a7810d9fafbc1cbd"
+  
+  # 自定义套餐积分计算公式
+  pointsFormula:
+    memoryPerMB: 0.01       # 每 MB 内存的积分
+    cpuPerPercent: 0.1      # 每 1% CPU 的积分
+    diskPerGB: 0.5          # 每 GB 磁盘的积分
+    perPort: 5              # 每个端口的积分
+    bandwidthPerMbps: 2     # 每 Mbps 带宽的积分
+  
+  # 自定义套餐资源限制
+  limits:
+    minMemory: 512          # 最小内存（MB）
+    maxMemory: 16384        # 最大内存（MB）
+    minCpu: 50              # 最小 CPU（%）
+    maxCpu: 400             # 最大 CPU（%）
+    minDisk: 5              # 最小磁盘（GB）
+    maxDisk: 100            # 最大磁盘（GB）
+    minPorts: 1             # 最小端口数
+    maxPorts: 10            # 最大端口数
+    minBandwidth: 1         # 最小带宽（Mbps）
+    maxBandwidth: 100       # 最大带宽（Mbps）
+  
+  defaultDuration: 30       # 默认时长（天）
+
+# ============== 管理员配置 ==============
+rootAdmin:
+  password:             # 管理员密码哈希（首次访问 /admin 页面设置）
+  passwordSet: false        # 密码是否已设置
+
+# ============== CORS 跨域配置 ==============
+cors:
+  allowedOrigins:
+    - '*'                   # 允许的来源，'*' 表示允许所有
+
+# ============== Docker 镜像配置 ==============
+docker:
+  defaultImage: azul/zulu-openjdk-debian:17-latest  # 默认 Docker 镜像
+  
+  # 可用的 Docker 镜像列表
+  availableImages:
+    - id: java21
+      name: Java 21 (Zulu OpenJDK)
+      image: azul/zulu-openjdk-debian:21-latest
+      description: 适用于 Minecraft 1.20.5+ 等需要 Java 21 的服务端
+    
+    - id: java17
+      name: Java 17 (Zulu OpenJDK)
+      image: azul/zulu-openjdk-debian:17-latest
+      description: 适用于 Minecraft 1.17-1.20.4 等需要 Java 17 的服务端
+    
+    - id: java8
+      name: Java 8 (Zulu OpenJDK)
+      image: azul/zulu-openjdk-debian:8-latest
+      description: 适用于 Minecraft 1.16 及更早版本等需要 Java 8 的服务端
+    
+    - id: mcdr
+      name: MCDReforged (Python 3.12)
+      image: mcdreforged/mcdreforged:dev-py3.12
+      description: MCDReforged 服务端管理框架，适用于需要插件管理的服务器
+    
+    - id: java25
+      name: Java 25 (Zulu OpenJDK)
+      image: azul/zulu-openjdk-debian:25-latest
+      description: 适用于 Minecraft 1.21.5 及更高版本等需要 Java 25 的服务端
+
+# ============== 签到系统配置 ==============
+checkin:
+  enabled: true             # 是否启用签到功能
+  basePoints: 10            # 基础签到积分
+  continuousBonus: 5        # 连续签到奖励
+  maxContinuousBonus: 50    # 最大连续签到奖励
+
+# ============== 每日消耗配置 ==============
+dailyConsumption:
+  enabled: true             # 是否启用每日消耗
+  pointsPerServer: 1        # 每个服务器每日消耗积分
+
+# ============== QQ 机器人配置 ==============
+onebot:
+  enabled: true                         # 是否启用QQ机器人（true=启用, false=禁用）
+  ws_url: ws://127.0.0.1:3001           # OneBot WebSocket 地址
+  access_token: ''                      # OneBot 访问令牌（如果需要）
+  target_group: ''                      # 目标 QQ 群号
+  verify_timeout: 120                   # 验证码超时时间（秒）
+
+# ============== 日志配置 ==============
+logging:
+  enabled: true              # 是否启用日志
+  level: info                # 日志级别: debug, info, warn, error
+  console: true              # 是否输出到控制台
+  file: true                 # 是否输出到文件
+  directory: logs            # 日志文件目录
+  maxFiles: 7                # 保留最近几天的日志文件
+  format: '[{timestamp}] [{level}] {message}'  # 日志格式
