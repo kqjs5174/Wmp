@@ -39,10 +39,10 @@ Wmp 是一个专为 Minecraft 服务器运营设计的综合管理系统，提�
 
 ### 安装步骤
 
-1. **克隆项目**
-```bash
-git clone https://github.com/yourusername/wmp.git
-cd wmp
+1. **下载最新构建**
+```
+https://github.com/kqjs5174/Wmp/releases
+
 ```
 
 2. **安装依赖**
@@ -174,7 +174,7 @@ auth:
 
 ## 🤝 依赖项目
 
-本项目依赖以下开源项目：
+本项目依赖以下项目：
 
 - **[MCSManager](https://github.com/MCSManager/MCSManager)** - Minecraft 服务器管理面板（必需）
 - **[Dty](https://github.com/kqjs5174/Dty)** - 支付监控 Python 程序（可选）
@@ -191,8 +191,6 @@ auth:
 - ✅ 服务器管理已完成
 - ✅ QQ 机器人集成已完成
 - 🚧 Wiki 文档编写中
-- 🚧 单元测试编写中
-- 🚧 性能优化进行中
 
 ---
 
@@ -224,8 +222,8 @@ auth:
 
 ## 📮 联系方式
 
-- **Issues**：[GitHub Issues](https://github.com/yourusername/wmp/issues)
-- **Wiki**：[项目文档](https://github.com/yourusername/wmp/wiki)（编写中）
+- **Issues**：[GitHub Issues](https://github.com/kqjs5174/Wmp/issues)
+- **QQ**：[开发者QQ] 3043711132
 
 ---
 
