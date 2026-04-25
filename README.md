@@ -172,6 +172,83 @@ auth:
 
 ---
 
+## 📸 功能展示
+
+### 管理面板
+- 用户管理、订单管理、服务器监控
+- 积分充值、兑换码生成
+- 系统配置、公告发布
+
+### 用户界面
+- 在线充值、服务器创建
+- 服务器续费、自动续费配置
+- 每日签到、兑换码使用
+
+> 💡 提示：首次使用建议先访问管理面板进行系统配置
+
+---
+
+## ❓ 常见问题
+
+<details>
+<summary><b>Q: 如何获取 MCSManager API 密钥？</b></summary>
+
+1. 登录 MCSManager 面板
+2. 进入"设置" → "API 密钥"
+3. 创建新的 API 密钥并复制到 `config.yml`
+</details>
+
+<details>
+<summary><b>Q: 支付功能如何配置？</b></summary>
+
+需要配合 [Dty](https://github.com/kqjs5174/Dty) 支付监控程序使用：
+1. 部署 Dty 支付监控服务
+2. 在 `config.yml` 中配置支付查询 API 地址
+3. 确保网络连通性
+</details>
+
+<details>
+<summary><b>Q: QQ 机器人如何启用？</b></summary>
+
+1. 部署 OneBot 协议实现（如 llbot、NapCat 等）
+2. 在 `config.yml` 中配置 WebSocket 地址和群号
+3. 设置 `onebot.enabled: true`
+</details>
+
+<details>
+<summary><b>Q: 数据会丢失吗？</b></summary>
+
+所有数据存储在 `data/` 目录的 JSON 文件中，建议：
+- 定期备份 `data/` 目录
+- 使用版本控制（但不要提交敏感数据）
+- 考虑使用数据库（未来版本可能支持）
+</details>
+
+<details>
+<summary><b>Q: 如何重置管理员密码？</b></summary>
+
+1. 停止服务
+2. 编辑 `config.yml`，将 `rootAdmin.password` 设为空
+3. 将 `rootAdmin.passwordSet` 设为 `false`
+4. 重启服务并访问 `/admin` 重新设置
+</details>
+
+---
+
+## 🔒 安全建议
+
+在生产环境部署时，请注意以下安全事项：
+
+- ✅ 修改默认端口，使用反向代理（Nginx/Caddy）
+- ✅ 启用 HTTPS（配置 SSL 证书）
+- ✅ 设置强密码，定期更换 JWT 密钥
+- ✅ 限制管理面板访问 IP（通过防火墙或反向代理）
+- ✅ 定期备份 `data/` 目录和 `config.yml`
+- ✅ 不要将 `config.yml` 和 `data/` 开放给任何人
+- ✅ 使用进程管理工具（PM2、systemd）保持服务运行
+
+---
+
 ## 🤝 依赖项目
 
 本项目依赖以下项目：
@@ -223,7 +300,14 @@ auth:
 ## 📮 联系方式
 
 - **Issues**：[GitHub Issues](https://github.com/kqjs5174/Wmp/issues)
-- **开发者QQ** :3043711132
+- **开发者 QQ**：3043711132
+- **更新日志**：[Releases](https://github.com/kqjs5174/Wmp/releases)
+
+---
+
+## 🌟 Star History
+
+如果这个项目对你有帮助，欢迎 Star 支持！
 
 ---
 
