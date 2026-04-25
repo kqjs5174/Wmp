@@ -223,7 +223,7 @@ auth:
 ## 📮 联系方式
 
 - **Issues**：[GitHub Issues](https://github.com/kqjs5174/Wmp/issues)
-- **开发者QQ** 3043711132
+- **开发者QQ** :3043711132
 
 ---
 
