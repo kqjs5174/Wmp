@@ -10,7 +10,6 @@
 
 没有他这个项目没什么用
 # 使用
-## 最近新写了个一键安装脚本:curl -fsSL http://www.air114.top:27659/down/DV5o2YMHIW7Q.sh | sudo bash 可以试试
 他不完全依赖一个Python程序([链接](https://github.com/kqjs5174/Dty)) (只是用指定功能才需要)
 
 不要从原代码下载 我通常懒得更新他 或者很慢 去下载构建
