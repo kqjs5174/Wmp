@@ -6,7 +6,7 @@
 
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-开发中-yellow.svg)](https://github.com/yourusername/wmp)
+[![Status](https://img.shields.io/badge/status-开发中-yellow.svg)](https://github.com/kqjs5174/wmp)
 
 </div>
 
