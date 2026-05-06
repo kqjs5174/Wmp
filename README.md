@@ -35,7 +35,6 @@ Wmp 是一个专为 Minecraft 服务器运营设计的综合管理系统，提�
 
 - **Node.js** >= 16.x
 - **MCSManager** 面板（必需）
-- **Python 3.x**（可选，用于支付监控功能）
 
 ### 安装步骤
 
@@ -200,10 +199,7 @@ auth:
 <details>
 <summary><b>Q: 支付功能如何配置？</b></summary>
 
-需要配合 [Dty](https://github.com/kqjs5174/Dty) 支付监控程序使用：
-1. 部署 Dty 支付监控服务
-2. 在 `config.yml` 中配置支付查询 API 地址
-3. 确保网络连通性
+开发未完成,敬请期待
 </details>
 
 <details>
@@ -253,7 +249,6 @@ auth:
 本项目依赖以下项目：
 
 - **[MCSManager](https://github.com/MCSManager/MCSManager)** - Minecraft 服务器管理面板（必需）
-- **[Dty](https://github.com/kqjs5174/Dty)** - 支付监控 Python 程序（可选）
 - **[OneBot](https://github.com/botuniverse/onebot)** - QQ 机器人协议（可选）
 
 ---
