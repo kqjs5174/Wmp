@@ -58,10 +58,6 @@ mcsm:
   panelUrl: https://your-panel.com:23333  # MCSManager 面板地址
   apiKey: YOUR_API_KEY_HERE               # MCSManager API 密钥
 
-services:
-  payment:
-    backend:
-      url: http://YOUR_PAY_IP/query_payment  # 支付查询 API 地址
 ```
 
 4. **启动服务**
@@ -107,7 +103,7 @@ wmp/
 
 ### 1. 支付与充值系统
 
-- **在线充值**：支持微信支付监控，实时到账
+- **在线充值**：支持接入api，实时到账
 - **订单管理**：完整的订单创建、查询、处理流程
 - **积分比例**：可配置的充值积分比例（默认 1元 = 6积分）
 - **支付验证**：防重复处理，支付时间窗口验证
