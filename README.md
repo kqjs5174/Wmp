@@ -1,4 +1,4 @@
-# Wmp - Minecraft 服务器管理与支付系统
+# EasySell - Minecraft 服务器管理与支付系统
 
 <div align="center">
 
@@ -6,7 +6,7 @@
 
 [![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/status-开发中-yellow.svg)](https://github.com/kqjs5174/wmp)
+[![Status](https://img.shields.io/badge/status-开发中-yellow.svg)](https://github.com/kqjs5174/EasySell)
 
 </div>
 
@@ -14,7 +14,7 @@
 
 ## 📖 项目简介
 
-Wmp 是一个专为 Minecraft 服务器运营设计的综合管理系统，提供完整的商业化运营解决方案。系统深度集成 **MCSManager 面板**，实现服务器自动化管理、在线支付、积分充值、自动续费等核心功能。
+EasySell 是一个专为 Minecraft 服务器运营设计的综合管理系统，提供完整的商业化运营解决方案。系统深度集成 **MCSManager 面板**，实现服务器自动化管理、在线支付、积分充值、自动续费等核心功能。
 
 ### ✨ 核心特性
 
@@ -40,7 +40,7 @@ Wmp 是一个专为 Minecraft 服务器运营设计的综合管理系统，提�
 
 1. **下载最新构建**
 ```
-https://github.com/kqjs5174/Wmp/releases
+https://github.com/kqjs5174/EasySell/releases
 ```
 
 2. **安装依赖**
@@ -76,7 +76,7 @@ node server.js
 ## 📁 项目结构
 
 ```
-wmp/
+EasySell/
 ├── server.js              # 主服务器文件
 ├── logger.js              # 日志系统
 ├── config.yml             # 配置文件
@@ -302,9 +302,9 @@ auth:
 
 ## 📮 联系方式
 
-- **Issues**：[GitHub Issues](https://github.com/kqjs5174/Wmp/issues)
+- **Issues**：[GitHub Issues](https://github.com/kqjs5174/EasySell/issues)
 - **开发者 QQ**：3043711132
-- **更新日志**：[Releases](https://github.com/kqjs5174/Wmp/releases)
+- **更新日志**：[Releases](https://github.com/kqjs5174/EasySell/releases)
 
 ---
 
