@@ -23,7 +23,7 @@
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^8.0.7",
     "svg-captcha": "^1.4.0",
-    "ws": "^8.20.0"
+    "ws": "^8.20.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
