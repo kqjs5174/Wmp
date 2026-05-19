@@ -1,0 +1,31 @@
+{
+  "name": "easysell",
+  "version": "1.2.3",
+  "description": "EasySell",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "dev:watch": "nodemon --watch server.js --watch config.yml --watch public server.js"
+  },
+  "keywords": [
+    "payment",
+    "recharge",
+    "management"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "bcrypt": "^6.0.0",
+    "canvas": "^3.2.3",
+    "js-yaml": "^4.1.1",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^8.0.7",
+    "svg-captcha": "^1.4.0",
+    "ws": "^8.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
