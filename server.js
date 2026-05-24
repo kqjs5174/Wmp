@@ -2443,7 +2443,7 @@ const autoRenewalManager = {
             const triggerTime = instance.endTime - advanceMs;
 
             if (now < triggerTime) {
-                logger.debug(`⏳ 未到续费时间: ${username}/${instanceUuid}, 还需 ${Math.ceil((triggerTime - now) / (1000 * 60 * 60 * 24))} 天`);
+                logger.debug(`未到续费时间: ${username}/${instanceUuid}, 还需 ${Math.ceil((triggerTime - now) / (1000 * 60 * 60 * 24))} 天`);
                 return { success: false, error: '未到续费时间', skip: true };
             }
 
@@ -2460,7 +2460,7 @@ const autoRenewalManager = {
 
             if (userPoints < requiredPoints) {
                 const error = `积分不足 (需要: ${requiredPoints}, 当前: ${userPoints})`;
-                logger.warn(`❌ 自动续费失败: ${username}/${instanceUuid} - ${error}`);
+                logger.warn(`自动续费失败: ${username}/${instanceUuid} - ${error}`);
                 
                 // 更新失败记录
                 renewalConfig.failedAttempts = (renewalConfig.failedAttempts || 0) + 1;
@@ -2507,7 +2507,7 @@ const autoRenewalManager = {
             renewalConfig.lastFailReason = null;
             this.setConfig(username, instanceUuid, renewalConfig);
 
-            logger.info(`✅ 自动续费成功: ${username}/${instanceUuid}, 续费${renewalConfig.renewalDays}天, 消耗${totalCost}积分`);
+            logger.info(`自动续费成功: ${username}/${instanceUuid}, 续费${renewalConfig.renewalDays}天, 消耗${totalCost}积分`);
 
             // 发送通知（如果启用）
             if (config.autoRenewal?.notifyOnSuccess) {
@@ -2532,7 +2532,7 @@ const autoRenewalManager = {
             };
 
         } catch (error) {
-            logger.error(`❌ 自动续费异常: ${username}/${instanceUuid} -`, error.message);
+            logger.error(`自动续费异常: ${username}/${instanceUuid} -`, error.message);
             
             // 更新失败记录
             renewalConfig.failedAttempts = (renewalConfig.failedAttempts || 0) + 1;
@@ -2566,7 +2566,7 @@ const autoRenewalManager = {
 
             let message = '';
             if (success) {
-                message = `✅ 自动续费成功\n` +
+                message = `自动续费成功\n` +
                          `━━━━━━━━━━━━━━\n` +
                          `实例: ${instanceName}\n` +
                          `续费天数: ${data.days}天\n` +
@@ -2574,18 +2574,18 @@ const autoRenewalManager = {
                          `新到期时间: ${data.newEndTime}\n` +
                          `剩余积分: ${data.remainingPoints}`;
             } else {
-                message = `⚠️ 自动续费失败\n` +
+                message = `自动续费失败\n` +
                          `━━━━━━━━━━━━━━\n` +
                          `实例: ${instanceName}\n` +
                          `失败原因: ${error}\n` +
                          `\n` +
-                         `💡 请及时充值或手动续费`;
+                         `请及时充值或手动续费`;
             }
 
             // 这里需要调用QQ机器人的发送消息功能
             // 由于sendGroupMessage需要在QQ机器人连接后才能使用
             // 这里只是记录日志，实际发送需要在QQ机器人模块中实现
-            logger.info(`📢 自动续费通知: ${username} (QQ: ${qqNumber})`);
+            logger.info(`自动续费通知: ${username} (QQ: ${qqNumber})`);
 
         } catch (error) {
             logger.error('发送自动续费通知失败:', error.message);
@@ -2612,7 +2612,7 @@ function startAutoRenewalMonitor() {
     const autoRenewalConfig = config.autoRenewal || {};
     
     if (autoRenewalConfig.enabled === false) {
-        logger.info('⏸️ 自动续费功能已禁用');
+        logger.info('自动续费功能已禁用');
         return;
     }
 
