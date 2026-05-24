@@ -6,6 +6,7 @@
 
 const http = require('http');
 const https = require('https');
+const net = require('net');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
@@ -594,26 +595,26 @@ function parseProxyProtocolV2(buffer) {
     if (version !== 2) {
         return null;
     }
+
+    const addrLen = buffer.readUInt16BE(14);
+    const headerLength = 16 + addrLen;
+
+    if (buffer.length < headerLength) {
+        return null;
+    }
     
     // command: 0 = LOCAL (健康检查), 1 = PROXY
     if (command === 0) {
         // LOCAL 命令，忽略地址信息
         return {
             isLocal: true,
-            headerLength: 16
+            headerLength
         };
     }
     
     const famProto = buffer[13];
     const family = (famProto & 0xF0) >> 4;
     const protocol = famProto & 0x0F;
-    
-    const addrLen = buffer.readUInt16BE(14);
-    const headerLength = 16 + addrLen;
-    
-    if (buffer.length < headerLength) {
-        return null;
-    }
     
     let srcAddress, dstAddress, srcPort, dstPort;
     
@@ -2417,7 +2418,7 @@ const autoRenewalManager = {
     // 执行单个实例的自动续费
     async executeRenewal(username, instanceUuid, renewalConfig) {
         try {
-            logger.info(`🔄 开始自动续费: ${username}/${instanceUuid}`);
+            logger.info(`开始自动续费: ${username}/${instanceUuid}`);
 
             // 获取实例信息
             const result = await getUserInstancesByUsername(username);
@@ -9710,7 +9711,7 @@ function setupProxyProtocol(server, version = 1) {
                 }
             } else if (buffer.length > 512) {
                 // 如果缓冲区过大仍未解析成功，可能不是 PROXY Protocol
-                logger.warn('PROXY Protocol 解析失败，可能不是有效的 PROXY Protocol 头部');
+                logger.debug('PROXY Protocol 解析失败，可能不是有效的 PROXY Protocol 头部');
                 proxyParsed = true;
                 socket.removeListener('data', onData);
                 
@@ -9737,6 +9738,149 @@ function setupProxyProtocol(server, version = 1) {
         }
         return originalEmit(event, req, res);
     };
+}
+
+function getProxyProtocolState(buffer, version = 1) {
+    if (version === 1) {
+        if (buffer.length >= 5 && buffer.toString('ascii', 0, 5) !== 'PROXY') {
+            return { status: 'invalid' };
+        }
+
+        const proxyInfo = parseProxyProtocolV1(buffer);
+        if (proxyInfo) {
+            return { status: 'complete', proxyInfo };
+        }
+
+        return buffer.length > 108 ? { status: 'invalid' } : { status: 'pending' };
+    }
+
+    if (version === 2) {
+        const signature = Buffer.from([0x0D, 0x0A, 0x0D, 0x0A, 0x00, 0x0D, 0x0A, 0x51, 0x55, 0x49, 0x54, 0x0A]);
+
+        if (buffer.length >= signature.length && !buffer.slice(0, signature.length).equals(signature)) {
+            return { status: 'invalid' };
+        }
+
+        const proxyInfo = parseProxyProtocolV2(buffer);
+        if (proxyInfo) {
+            return { status: 'complete', proxyInfo };
+        }
+
+        if (buffer.length >= 16) {
+            const headerLength = 16 + buffer.readUInt16BE(14);
+            if (buffer.length > headerLength) {
+                return { status: 'invalid' };
+            }
+        }
+
+        return { status: 'pending' };
+    }
+
+    return { status: 'invalid' };
+}
+
+function formatProxyProtocolPreview(buffer) {
+    const preview = buffer.slice(0, 32);
+    const hex = preview.toString('hex').match(/.{1,2}/g)?.join(' ') || '';
+    const ascii = preview.toString('latin1').replace(/[^\x20-\x7E]/g, '.');
+    return `len=${buffer.length}, hex="${hex}", ascii="${ascii}"`;
+}
+
+function getSocketProxyProtocol(socket) {
+    return socket?.proxyProtocol ||
+           socket?._parent?.proxyProtocol ||
+           socket?.socket?.proxyProtocol ||
+           null;
+}
+
+function createProxyProtocolServer(server, version = 1) {
+    logger.info(`启用 PROXY Protocol v${version} 支持`);
+
+    const proxyServer = net.createServer((socket) => {
+        let buffer = Buffer.alloc(0);
+        const maxHeaderLength = version === 1 ? 108 : 65551;
+        const peer = `${socket.remoteAddress || 'unknown'}:${socket.remotePort || 'unknown'}`;
+        logger.debug(`PROXY Protocol: 新连接 ${peer}，期望 v${version}`);
+        const timeout = setTimeout(() => {
+            logger.warn(`PROXY Protocol 头部读取超时，关闭连接: peer=${peer}, ${formatProxyProtocolPreview(buffer)}`);
+            socket.destroy();
+        }, 5000);
+
+        const cleanup = () => {
+            clearTimeout(timeout);
+            socket.removeListener('data', onData);
+            socket.removeListener('error', cleanup);
+        };
+
+        const passToHttpServer = (proxyInfo, remainingData) => {
+            cleanup();
+
+            if (proxyInfo) {
+                socket.proxyProtocol = proxyInfo;
+
+                if (proxyInfo.srcAddress) {
+                    logger.debug(`PROXY Protocol v${version} 解析成功: peer=${peer}, 真实IP=${proxyInfo.srcAddress}:${proxyInfo.srcPort}, 目标=${proxyInfo.dstAddress}:${proxyInfo.dstPort}`);
+                } else {
+                    logger.debug(`PROXY Protocol v${version} 解析成功: peer=${peer}, 未携带源地址, headerLength=${proxyInfo.headerLength}`);
+                }
+            }
+
+            if (remainingData.length > 0) {
+                socket.unshift(remainingData);
+            }
+
+            server.emit('connection', socket);
+            socket.resume();
+        };
+
+        const onData = (chunk) => {
+            buffer = Buffer.concat([buffer, chunk]);
+
+            if (buffer.length > maxHeaderLength) {
+                cleanup();
+                logger.warn(`PROXY Protocol 头部过大，关闭连接: peer=${peer}, max=${maxHeaderLength}, ${formatProxyProtocolPreview(buffer)}`);
+                socket.destroy();
+                return;
+            }
+
+            const state = getProxyProtocolState(buffer, version);
+
+            if (state.status === 'complete') {
+                passToHttpServer(state.proxyInfo, buffer.slice(state.proxyInfo.headerLength));
+            } else if (state.status === 'invalid') {
+                logger.debug(`PROXY Protocol 解析失败，按普通连接处理: peer=${peer}, expected=v${version}, ${formatProxyProtocolPreview(buffer)}`);
+                passToHttpServer(null, buffer);
+            }
+        };
+
+        socket.pause();
+        socket.on('data', onData);
+        socket.on('error', cleanup);
+        socket.resume();
+    });
+
+    proxyServer.on('error', (error) => {
+        server.emit('error', error);
+    });
+
+    const originalEmit = server.emit.bind(server);
+    server.emit = function(event, req, res) {
+        if (event === 'secureConnection') {
+            const proxyInfo = getSocketProxyProtocol(req);
+            if (proxyInfo) {
+                req.proxyProtocol = proxyInfo;
+            }
+        } else if (event === 'request' && req.socket) {
+            const proxyInfo = getSocketProxyProtocol(req.socket);
+            if (proxyInfo) {
+                req.proxyProtocol = proxyInfo;
+                req.socket.proxyProtocol = proxyInfo;
+            }
+        }
+        return originalEmit(event, req, res);
+    };
+
+    return proxyServer;
 }
 
 // ============== 启动服务器 ==============
@@ -9784,7 +9928,7 @@ function startServer() {
             
             // 如果启用了 PROXY Protocol，添加连接监听器
             if (proxyConfig && proxyConfig.enabled) {
-                setupProxyProtocol(server, proxyConfig.version || 1);
+                server = createProxyProtocolServer(server, proxyConfig.version || 1);
             }
             
             server.listen(PORT, HOST, () => {
@@ -9809,7 +9953,7 @@ function startServer() {
             
             // 如果启用了 PROXY Protocol，添加连接监听器
             if (proxyConfig && proxyConfig.enabled) {
-                setupProxyProtocol(server, proxyConfig.version || 1);
+                server = createProxyProtocolServer(server, proxyConfig.version || 1);
             }
             
             server.listen(PORT, HOST, () => {
@@ -9831,7 +9975,7 @@ function startServer() {
         
         // 如果启用了 PROXY Protocol，添加连接监听器
         if (proxyConfig && proxyConfig.enabled) {
-            setupProxyProtocol(server, proxyConfig.version || 1);
+            server = createProxyProtocolServer(server, proxyConfig.version || 1);
         }
         
         server.listen(PORT, HOST, () => {
