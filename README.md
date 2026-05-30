@@ -40,7 +40,7 @@ EasySell 是一个专为 Minecraft 服务器运营设计的综合管理系统，
 
 1. **下载最新构建**
 ```
-https://github.com/kqjs5174/EasySell/releases
+https://github.com/kqjs5174/Wmp/releases
 ```
 
 2. **安装依赖**
